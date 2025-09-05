@@ -1,0 +1,21 @@
+// NOTA: Se utilzó la extensión "REST client" de VsCode para testear la API
+
+GET http://localhost:3000/productos HTTP/1.1
+
+###
+
+GET http://localhost:3000/productos/3 HTTP/1.1
+
+###
+
+POST http://localhost:3000/productos HTTP/1.1 
+Content-Type: application/json
+
+{
+    "nombre": "Placa de video RTX 3060 12GB",
+    "precio": 460000
+}
+
+###
+
+DELETE  http://localhost:3000/productos/4 HTTP/1.1
