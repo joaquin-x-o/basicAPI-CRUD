@@ -12,7 +12,7 @@ app.use(express.json())
 
 // FUNCIONES
 
-// NOTA: se optó por fs síncronos debido a que el proyecto no requiere de un sistema de peticiones complejas
+// NOTA: se optó por fs asíncronos utilizando promesas, para un mejor manejo de datos en el futuro
 
 // readData: permite la lectura de los datos presentes en el archivo.json. En caso de no haber, se crea uno vacío.
 const readData = async () => {
