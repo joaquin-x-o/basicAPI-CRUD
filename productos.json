@@ -1,1 +1,17 @@
-[{"id":1,"nombre":"Memoria RAM 8GB","precio":23000},{"id":2,"nombre":"Disco solido SSD M.2 550GB","precio":27000},{"id":3,"nombre":"Fuente 750W 80 Plus Gold","precio":123000}]
+[
+    {
+        "id": 1,
+        "nombre": "Memoria RAM 8GB",
+        "precio": 23000
+    },
+    {
+        "id": 2,
+        "nombre": "Disco solido SSD M.2 550GB",
+        "precio": 27000
+    },
+    {
+        "id": 3,
+        "nombre": "Fuente 750W 80 Plus Gold",
+        "precio": 123000
+    }
+]
