@@ -1,10 +1,12 @@
 import express from "express";
-import fs from "fs";
+import fs from "fs/promises";
 import path from "path";
 
 const app = express();
 
+
 const dataBasePath = path.resolve("./productos.json") // en esta variable, se almacena la ruta del archivo.json
+
 
 app.use(express.json())
 
@@ -13,20 +15,20 @@ app.use(express.json())
 // NOTA: se optó por fs síncronos debido a que el proyecto no requiere de un sistema de peticiones complejas
 
 // readData: permite la lectura de los datos presentes en el archivo.json. En caso de no haber, se crea uno vacío.
-const readData = () => {
+const readData = async () => {
     try {
-        const data = fs.readFileSync(dataBasePath, "utf8");
+        const data = await fs.readFile(dataBasePath, "utf8");
         return JSON.parse(data);
     } catch (error) {
         console.log("No existe la base de datos indicada. Se procederá a crearla");
-        fs.writeFileSync(dataBasePath, "[]", "utf-8")
+        fs.writeFile(dataBasePath, "[]", "utf-8")
     }
 };
 
 // writeData: permite escribir nuevos datos al archivo.json
-const writeData = (data) => {
+const writeData = async (data) => {
     try {
-        fs.writeFileSync(dataBasePath, JSON.stringify(data));
+        await fs.writeFile(dataBasePath, JSON.stringify(data), "utf-8");
     } catch (error) {
         console.log(error);
     }
@@ -35,14 +37,14 @@ const writeData = (data) => {
 // OPERACIONES CRUD
 
 // GET 1: obtener la lista de productos cargados en el archivo.json
-app.get("/productos", (req, res) => {
-    const productos = readData();
+app.get("/productos", async (req, res) => {
+    const productos = await readData();
     res.json(productos);
 });
 
 // GET 2: obtener un producto especifico, indicado por su ID
-app.get("/productos/:id", (req, res) => {
-    const data = readData();
+app.get("/productos/:id", async (req, res) => {
+    const data = await readData();
     const id = parseInt(req.params.id);
     const producto = data.find(producto => producto.id === id);
 
@@ -56,8 +58,8 @@ app.get("/productos/:id", (req, res) => {
 
 
 // POST: cargar un nuevo producto al archivo.json
-app.post("/productos", (req, res) => {
-    const productos = readData();
+app.post("/productos", async (req, res) => {
+    const productos = await readData();
     const body = req.body; // almacena los datos ingresados en la petición HTTP
 
     // primero se valida que ambos datos estén presentes antes de continuar
@@ -88,8 +90,8 @@ app.post("/productos", (req, res) => {
 });
 
 // DELETE: borrar un producto especifico, indicado por su ID
-app.delete("/productos/:id", (req, res) => {
-    const data = readData();
+app.delete("/productos/:id", async (req, res) => {
+    const data = await readData();
     const id = parseInt(req.params.id);
 
     const productoIndex = data.findIndex((producto) => producto.id === id);
