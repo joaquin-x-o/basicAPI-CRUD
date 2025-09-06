@@ -21,7 +21,7 @@ const readData = async () => {
         return JSON.parse(data);
     } catch (error) {
         console.log("No existe la base de datos indicada. Se procederá a crearla");
-        fs.writeFile(dataBasePath, "[]", "utf-8")
+        await fs.writeFile(dataBasePath, "[]", "utf-8")
     }
 };
 
@@ -84,7 +84,7 @@ app.post("/productos", async (req, res) => {
 
 
     productos.push(productoNuevo); // se agrega el nuevo producto al array de productos
-    writeData(productos); //se actualizan los datos del archivo.json
+    await writeData(productos); //se actualizan los datos del archivo.json
 
     res.status(201).json({ mensaje: "Producto agregado con éxito", producto: productoNuevo });
 });
@@ -102,7 +102,7 @@ app.delete("/productos/:id", async (req, res) => {
     }
 
     data.splice(productoIndex, 1); // el producto indicado es borrado del array
-    writeData(data); // se actualizan los datos del archivo.json
+    await writeData(data); // se actualizan los datos del archivo.json
     
     res.json({ message: "Se eliminó el producto de forma correcta" });
 });
