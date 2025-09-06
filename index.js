@@ -22,7 +22,6 @@ const readData = async () => {
     } catch (error) {
         console.log("No existe la base de datos indicada. Se procederá a crearla");
         await fs.writeFile(dataBasePath, "[]", "utf-8")
-        fs.writeFile(dataBasePath, "[]", "utf-8")
     }
 };
 
